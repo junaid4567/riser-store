@@ -1,0 +1,53 @@
+name: Deploy RISER to InfinityFree
+
+# Runs automatically on every push to main. Uploads the site files to your
+# free InfinityFree hosting account over FTP, so "git push" = "site updates".
+#
+# ONE-TIME SETUP (do this before your first push):
+#   1. Sign up free at infinityfree.net / infinityfree.com, create a hosting
+#      account, and note the FTP details from the "FTP Accounts" section of
+#      your control panel (host, username, password).
+#   2. In this GitHub repo: Settings → Secrets and variables → Actions →
+#      "New repository secret". Add three secrets:
+#        FTP_SERVER    e.g. ftpupload.net
+#        FTP_USERNAME  e.g. if0_12345678
+#        FTP_PASSWORD  your FTP password
+#   3. Push to main. Check the "Actions" tab on GitHub to watch it deploy.
+#
+# NOTE: this uploads files only. It does NOT create your database or run
+# database.sql for you — do that once via phpMyAdmin in your InfinityFree
+# control panel, and create includes/config.php directly on the server
+# with your real DB credentials (that file is gitignored, so it never
+# comes from GitHub — see includes/config.sample.php).
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: # lets you also trigger a deploy manually from the Actions tab
+
+jobs:
+  ftp-deploy:
+    name: Upload changed files over FTP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # InfinityFree serves your site from htdocs/ — adjust if your
+          # host uses public_html/ or www/ instead.
+          server-dir: /htdocs/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            includes/config.php
+            includes/config.sample.php
+            README.md
+            migrations/**
+            database.sql

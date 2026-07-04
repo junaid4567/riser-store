@@ -186,12 +186,46 @@ Any of these work; pick based on budget and how hands-on you want to be:
 
 | Option | Good for | Notes |
 |---|---|---|
-| **Shared hosting** (Hostinger, Namecheap, cPanel hosts) | Cheapest, simplest, common in Pakistan | Usually has a "Git" deploy feature in cPanel, or use FTP/File Manager |
-| **Railway / Render** | Modern, GitHub-native deploys | Needs a small Dockerfile or PHP buildpack; add a MySQL plugin/service |
+| **InfinityFree** (or Byet.host, same infrastructure) | **Free**, real PHP 8 + unlimited MySQL, no credit card | FTP-only deploy natively — see the GitHub Actions auto-deploy setup below to bridge that gap |
+| **Shared hosting** (Hostinger, Namecheap, cPanel hosts) | Cheapest paid option, simplest, common in Pakistan | Usually has a "Git" deploy feature in cPanel, or use FTP/File Manager |
+| **Koyeb** | Modern, native GitHub-native deploys | Free instance available but requires a credit card for verification (not charged); free database is Postgres, not MySQL, so you'd need to swap `PDO` DSN or run MySQL as a separate one-click app |
 | **DigitalOcean / a VPS** | Full control | You manage Apache/Nginx + MySQL yourself |
-| **InfinityFree / 000webhost** | Free, good for testing only | Not recommended for a real store (limits, uptime) |
 
-### 3. Connect GitHub to your host
+### 3a. Free path: InfinityFree + GitHub Actions auto-deploy (recommended if budget is $0)
+
+This repo already includes `.github/workflows/deploy.yml`, which FTP-uploads
+your site automatically every time you push to `main`.
+
+1. Sign up free at [infinityfree.net](https://infinityfree.net) (no credit
+   card) and create a hosting account — you'll get a free subdomain like
+   `yoursite.infinityfreeapp.com`, or you can point your own domain at it.
+2. In your InfinityFree control panel, open **MySQL Databases** and create
+   one — note the database name, username, password, and hostname it gives
+   you (usually something like `sqlXXX.infinityfree.com`).
+3. Open **phpMyAdmin** from the control panel, select your new database,
+   and use **Import** to run `database.sql`.
+4. Open **FTP Accounts** in the control panel and note the FTP hostname,
+   username, and password.
+5. In your GitHub repo: **Settings → Secrets and variables → Actions → New
+   repository secret**. Add three secrets: `FTP_SERVER`, `FTP_USERNAME`,
+   `FTP_PASSWORD` using the values from step 4.
+6. Push to `main`. Check the **Actions** tab on GitHub — you'll see the
+   deploy run and upload your files into InfinityFree's `htdocs/` folder.
+7. On the server, create `includes/config.php` (there's no way around this
+   step — it's intentionally excluded from the auto-deploy and from git,
+   since it holds your real DB password). Use InfinityFree's File Manager
+   to create it directly, copying from `config.sample.php`, filled in with
+   the database details from step 2. Set `DEBUG_MODE` to `false`.
+8. Visit `https://yoursite.infinityfreeapp.com/setup.php` once to create
+   your admin login, then delete `setup.php` via File Manager.
+
+From then on: every `git push` to `main` re-deploys automatically. Free
+tier limits to know about: ~50,000 hits/day fair-use cap, 10-second max PHP
+execution time, no cron jobs. Fine for a store getting started; if you
+outgrow it, Byet.host (same underlying infrastructure) is a natural
+fallback, or move up to paid shared hosting below.
+
+### 3b. Paid path: connect GitHub to shared hosting / Koyeb
 
 - **Shared hosting with Git support (most cPanel hosts):** in cPanel, use
   "Git Version Control" → paste your GitHub repo URL → it clones and can
@@ -199,8 +233,10 @@ Any of these work; pick based on budget and how hands-on you want to be:
 - **Shared hosting without Git support:** simplest path — download the repo
   as a zip from GitHub (or `git pull` locally then upload via FTP/File
   Manager) each time you deploy. Not automatic, but reliable.
-- **Railway/Render:** connect the GitHub repo directly in their dashboard;
-  every push to `main` triggers a redeploy automatically.
+- **Koyeb:** connect the GitHub repo directly in their dashboard; every push
+  to `main` triggers a redeploy automatically. Requires adapting the DB
+  layer to Postgres (Koyeb's native free database) or running MySQL as a
+  separate one-click app service.
 
 ### 4. On the server, after the code is there
 
