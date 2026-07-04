@@ -1,0 +1,43 @@
+# =====================================================
+# RISER — Apache performance & security configuration
+# =====================================================
+
+# Friendly sitemap URL
+RewriteEngine On
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# ---- Security: block direct access to sensitive files ----
+# Note: this blocks /setup.php outright at the web-server level, in addition
+# to the self-locking check inside the script itself. If you need to run
+# initial setup, temporarily comment out "setup\.php|" below, run it once,
+# then restore this line (or just delete setup.php after first use).
+<FilesMatch "(^setup\.php|database\.sql|\.sql)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ---- Performance: gzip compression ----
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+    AddOutputFilterByType DEFLATE application/javascript application/json application/xml
+</IfModule>
+
+# ---- Performance: browser caching for static assets ----
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# Disable directory listing
+Options -Indexes

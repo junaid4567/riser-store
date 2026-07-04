@@ -1,0 +1,371 @@
+/* ===========================================================
+   RISER Admin Panel — extends store tokens, utility-first layout
+   =========================================================== */
+
+.admin-auth-body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  padding: 20px;
+}
+.admin-login-card {
+  background: var(--paper);
+  padding: 44px 36px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 8px 8px 0 var(--riser-red);
+}
+
+.admin-shell {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+  background: var(--paper-dim);
+}
+.admin-sidebar {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 28px 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+.admin-sidebar .logo {
+  font-size: 1.4rem;
+  margin-bottom: 36px;
+  display: block;
+  opacity: 0;
+  transform: translateX(-14px);
+  animation: sidebarItemIn .45s var(--ease) forwards;
+}
+.admin-nav { display: flex; flex-direction: column; }
+.admin-nav a,
+.admin-nav .divider {
+  opacity: 0;
+  transform: translateX(-14px);
+  animation: sidebarItemIn .45s var(--ease) forwards;
+  animation-delay: calc(0.06s + var(--i, 0) * 0.05s);
+}
+.admin-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mute-on-dark);
+  border-left: 3px solid transparent;
+  border-radius: 0 6px 6px 0;
+  position: relative;
+  transition: color .2s var(--ease), background .25s var(--ease), border-color .25s var(--ease), padding-left .2s var(--ease);
+}
+.admin-nav a .nav-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform .3s var(--ease);
+}
+.admin-nav a:hover .nav-icon { transform: scale(1.12) rotate(-4deg); }
+.admin-nav a:hover {
+  color: var(--paper);
+  background: rgba(255,255,255,0.05);
+  padding-left: 18px;
+}
+.admin-nav a.active {
+  color: var(--paper);
+  border-left-color: var(--riser-red);
+  background: rgba(232,67,44,0.12);
+}
+.admin-nav a.active .nav-icon { color: var(--riser-red); }
+.admin-nav .divider { height: 1px; background: var(--line); margin: 18px 0; }
+
+@keyframes sidebarItemIn {
+  to { opacity: 1; transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .admin-sidebar .logo, .admin-nav a, .admin-nav .divider { animation: none; opacity: 1; transform: none; }
+}
+
+/* Mobile off-canvas toggle + overlay (hidden on desktop) */
+.admin-sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 60;
+  width: 42px;
+  height: 42px;
+  background: var(--ink);
+  border: none;
+  border-radius: 8px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.admin-sidebar-toggle span {
+  width: 20px;
+  height: 2px;
+  background: var(--paper);
+  border-radius: 2px;
+  transition: transform .3s var(--ease), opacity .2s var(--ease);
+}
+.admin-sidebar-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.admin-sidebar-toggle.active span:nth-child(2) { opacity: 0; }
+.admin-sidebar-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.admin-sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 40;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s var(--ease);
+}
+.admin-sidebar-overlay.open { opacity: 1; pointer-events: auto; }
+
+.admin-main { padding: 32px 36px; }
+.admin-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.admin-topbar h1 { font-size: 1.6rem; }
+
+.admin-card {
+  background: var(--paper);
+  border: 1px solid var(--line-dark);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 28px;
+}
+@media (max-width: 900px) { .admin-stats { grid-template-columns: repeat(2, 1fr); } }
+.admin-stat {
+  background: var(--paper);
+  border: 1px solid var(--line-dark);
+  border-left: 4px solid var(--riser-red);
+  padding: 20px;
+}
+.admin-stat .label { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; color: var(--mute); letter-spacing: 0.06em; }
+.admin-stat .value { font-family: var(--font-display); font-size: 1.8rem; margin-top: 8px; }
+
+.admin-table { width: 100%; border-collapse: collapse; }
+.admin-table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--mute);
+  padding: 10px 12px;
+  border-bottom: 2px solid var(--line-dark);
+}
+.admin-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--line-dark);
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+.admin-table tr:hover td { background: rgba(232,67,44,0.04); }
+.admin-table img { width: 44px; height: 44px; object-fit: cover; background: var(--paper-dim); }
+
+.pill {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  display: inline-block;
+  border-radius: 20px;
+}
+.pill--pending { background: #fde9d0; color: #8a5a12; }
+.pill--confirmed { background: #d9e8fb; color: #1c4f8a; }
+.pill--shipped { background: #e4daf7; color: #5b2c91; }
+.pill--delivered { background: #d8f0e0; color: #1d5b3a; }
+.pill--cancelled { background: #fbdada; color: #8a2c1f; }
+
+.admin-btn-row { display: flex; gap: 8px; }
+.btn-small {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  padding: 7px 12px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: all .2s;
+}
+.btn-small:hover { background: var(--ink); color: var(--paper); }
+.btn-small.danger { border-color: #c0392b; color: #c0392b; }
+.btn-small.danger:hover { background: #c0392b; color: var(--white); }
+
+.admin-form .field { margin-bottom: 18px; }
+.variant-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr auto;
+  gap: 10px;
+  align-items: end;
+  margin-bottom: 12px;
+  padding: 14px;
+  background: var(--paper-dim);
+}
+@media (max-width: 760px) { .variant-row { grid-template-columns: 1fr 1fr; } }
+.variant-row .field { margin-bottom: 0; }
+
+@media (max-width: 880px) {
+  .admin-shell { grid-template-columns: 1fr; }
+  .admin-sidebar-toggle { display: flex; }
+  .admin-sidebar-overlay { display: block; }
+
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 260px;
+    max-width: 82vw;
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform .32s var(--ease);
+    box-shadow: none;
+  }
+  .admin-sidebar.open {
+    transform: translateX(0);
+    box-shadow: 8px 0 24px rgba(0,0,0,0.25);
+  }
+  /* Entrance animation only replays once the drawer opens on mobile */
+  .admin-sidebar .logo,
+  .admin-nav a,
+  .admin-nav .divider { animation: none; opacity: 1; transform: none; }
+  .admin-sidebar.open .logo,
+  .admin-sidebar.open .admin-nav a,
+  .admin-sidebar.open .admin-nav .divider {
+    animation: sidebarItemIn .4s var(--ease) forwards;
+  }
+
+  .admin-main { padding: 76px 18px 32px; }
+  .admin-topbar h1 { font-size: 1.3rem; }
+  .admin-stats { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .admin-card { padding: 16px; }
+
+  /* Tables scroll horizontally instead of squashing on small screens */
+  .admin-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .admin-table { min-width: 560px; }
+}
+
+@media (max-width: 480px) {
+  .admin-stats { grid-template-columns: 1fr; }
+  .admin-topbar { flex-direction: column; align-items: flex-start; }
+}
+
+/* ===========================================================
+   Dashboard v2 — widget grid (Page Views / Total Profit / Most
+   Day Active / Repeat Rate style layout)
+   =========================================================== */
+.admin-topbar .sub { font-family: var(--font-mono); font-size: 0.78rem; color: var(--mute); }
+
+.stat-trend { font-family: var(--font-mono); font-size: 0.72rem; padding: 2px 8px; border-radius: 12px; display: inline-block; margin-left: 8px; }
+.stat-trend.up { background: #d8f0e0; color: #1d5b3a; }
+.stat-trend.down { background: #fbdada; color: #8a2c1f; }
+.admin-stat .sub { font-family: var(--font-mono); font-size: 0.7rem; color: var(--mute); margin-top: 10px; }
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 1000px) { .dash-grid { grid-template-columns: 1fr; } }
+
+.widget-card {
+  background: var(--paper);
+  border: 1px solid var(--line-dark);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.widget-card h3 { font-size: 1rem; margin-bottom: 4px; }
+.widget-card .big-num { font-family: var(--font-display); font-size: 2.1rem; margin: 10px 0 4px; }
+
+.segbar { display: flex; height: 14px; width: 100%; border-radius: 8px; overflow: hidden; margin: 14px 0 10px; background: var(--paper-dim); }
+.segbar span { display: block; height: 100%; }
+.seg-legend { display: flex; flex-wrap: wrap; gap: 14px; font-family: var(--font-mono); font-size: 0.74rem; color: var(--mute); }
+.seg-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
+
+.weekday-chart { display: flex; align-items: flex-end; gap: 10px; height: 150px; margin-top: 16px; }
+.weekday-chart .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+.weekday-chart .bar { width: 100%; max-width: 28px; background: var(--paper-dim); border-radius: 4px 4px 0 0; transition: height .4s var(--ease); }
+.weekday-chart .bar.peak { background: var(--riser-red); }
+.weekday-chart .bar-label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--mute); margin-top: 8px; }
+.weekday-chart .bar-col.peak .bar-label { color: var(--ink); font-weight: 700; }
+
+.donut-wrap { display: flex; flex-direction: column; align-items: center; margin-top: 10px; }
+.donut {
+  width: 168px; height: 168px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.donut .donut-inner {
+  width: 124px; height: 124px; border-radius: 50%; background: var(--paper);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.donut .pct { font-family: var(--font-display); font-size: 1.6rem; }
+.donut .pct-sub { font-family: var(--font-mono); font-size: 0.66rem; color: var(--mute); text-align: center; padding: 0 14px; }
+
+.insight-list { list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-direction: column; gap: 12px; }
+.insight-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.86rem; }
+.insight-list .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--riser-red); margin-top: 6px; flex-shrink: 0; }
+
+.export-btn {
+  font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase;
+  border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+  padding: 9px 16px; letter-spacing: 0.04em;
+}
+.export-btn:hover { opacity: 0.85; }
+
+/* ===========================================================
+   Direct product image upload widget (product-edit.php)
+   =========================================================== */
+.image-upload {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.image-upload__preview {
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+  background: var(--paper-dim);
+  border: 1px solid var(--line-dark);
+  overflow: hidden;
+}
+.image-upload__preview img { width: 100%; height: 100%; object-fit: cover; }
+.image-upload__controls { flex: 1; min-width: 200px; }
+.image-upload__btn {
+  display: inline-block;
+  cursor: pointer;
+}
+.image-upload details summary::marker { color: var(--mute); }
+
+@media (max-width: 480px) {
+  .image-upload { flex-direction: column; align-items: stretch; }
+  .image-upload__preview { width: 100%; height: 180px; }
+}

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+  <rect width="600" height="600" fill="#E9E4D6"/>
+  <g transform="translate(300,300)">
+    <circle r="110" fill="none" stroke="#0D0D0D" stroke-width="2" stroke-dasharray="6 8" opacity="0.3"/>
+    <path d="M -90 20 Q -90 -60 0 -60 Q 90 -60 90 20 L 95 35 Q 0 55 -95 35 Z" fill="#0D0D0D" opacity="0.85"/>
+    <rect x="-12" y="-66" width="24" height="14" rx="3" fill="#0D0D0D" opacity="0.85"/>
+  </g>
+  <text x="300" y="480" text-anchor="middle" font-family="monospace" font-size="16" letter-spacing="2" fill="#8A8A8A">RISER — IMAGE COMING SOON</text>
+</svg>

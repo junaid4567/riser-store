@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /setup.php
+Disallow: /cart.php
+Disallow: /checkout.php
+Disallow: /order-success.php
+Disallow: /cart-actions.php
+
+Sitemap: /sitemap.php

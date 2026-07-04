@@ -1,0 +1,28 @@
+# Real database credentials — never commit this. Copy
+# includes/config.sample.php to includes/config.php and fill in real values.
+includes/config.php
+
+# Local environment / secrets, if used instead
+.env
+.env.local
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/
+
+# Logs
+*.log
+error_log
+
+# Product images uploaded through the admin panel are runtime content,
+# not source code — don't version-control them.
+images/products/*
+!images/products/.gitkeep
+
+# One-time setup script — delete or keep local only after first run
+# (uncomment the line below once you've created your admin account)
+# setup.php
