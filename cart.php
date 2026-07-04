@@ -25,7 +25,7 @@ include __DIR__ . '/includes/header.php';
     </div>
   <?php else: ?>
     <div class="cart-layout">
-      <div>
+      <div class="cart-layout__main">
       <div class="table-scroll">
         <table class="cart-table">
           <thead>

@@ -1225,6 +1225,27 @@ body.menu-open { overflow: hidden; }
 }
 @media (max-width: 920px) { .cart-layout { grid-template-columns: 1fr; } }
 
+/* ===========================================================
+   Defensive: grid items default to min-width:auto, which lets any wide
+   child (a table with a set min-width, a fixed-width form field, etc.)
+   force the whole grid — and therefore the whole page — wider than the
+   phone screen. Applied to every multi-column grid on the site that
+   collapses to one column on mobile, so this class of bug can't recur.
+   =========================================================== */
+.hero__inner > *,
+.shop-layout > *,
+.pdp > *,
+.cart-layout > *,
+.form-grid > *,
+.about-block > *,
+.contact-layout > *,
+.footer__grid > *,
+.value-grid > *,
+.stat-strip > *,
+.grid > * {
+  min-width: 0;
+}
+
 .cart-table { width: 100%; border-collapse: collapse; }
 .cart-table th {
   text-align: left;
