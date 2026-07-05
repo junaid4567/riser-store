@@ -51,8 +51,8 @@ include __DIR__ . '/includes/header.php';
                     </div>
                   </div>
                 </td>
-                <td><?= formatPrice($item['price'] + $item['custom_fee']) ?></td>
-                <td>
+                <td data-label="Price"><?= formatPrice($item['price'] + $item['custom_fee']) ?></td>
+                <td data-label="Quantity">
                   <div class="qty-stepper">
                     <button type="button" class="js-qty-dec" aria-label="Decrease">&minus;</button>
                     <input type="text" class="js-cart-qty"
@@ -62,7 +62,7 @@ include __DIR__ . '/includes/header.php';
                     <button type="button" class="js-qty-inc" aria-label="Increase">+</button>
                   </div>
                 </td>
-                <td><strong><?= formatPrice($item['line_total']) ?></strong></td>
+                <td data-label="Total"><strong><?= formatPrice($item['line_total']) ?></strong></td>
               </tr>
             <?php endforeach; ?>
           </tbody>

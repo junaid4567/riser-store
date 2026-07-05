@@ -1691,7 +1691,37 @@ body.menu-open { overflow: hidden; }
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
 @media (max-width: 640px) {
-  .cart-table { min-width: 560px; }
+  /* Cart table becomes a stack of cards instead of a horizontally
+     scrolling table — no sideways scrollbar, no squeezed columns. */
+  .table-scroll { overflow-x: visible; }
+  .cart-table, .cart-table tbody { display: block; width: 100%; }
+  .cart-table thead { display: none; }
+  .cart-table tr {
+    display: block;
+    border: 1px solid var(--line-dark);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 16px;
+    background: var(--paper);
+  }
+  .cart-table td {
+    display: block;
+    width: 100%;
+    padding: 8px 0;
+    border-bottom: none;
+  }
+  .cart-table td:first-child { padding-top: 0; }
+  .cart-table td:last-child { padding-bottom: 0; }
+  .cart-table td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mute);
+    margin-bottom: 4px;
+  }
 
   /* Bigger, easier-to-tap controls on small screens */
   .swatch, .btn-small, .qty-stepper button { min-height: 40px; }
