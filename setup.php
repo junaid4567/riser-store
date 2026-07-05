@@ -58,7 +58,7 @@ if (!$locked && $_SERVER['REQUEST_METHOD'] === 'POST') {
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <title>RISER Setup</title>
-<link rel="stylesheet" href="<?= BASE_URL ?>/css/style.css">
+<link rel="stylesheet" href="<?= assetUrl('/css/style.css') ?>">
 <style>
   body { display:flex; align-items:center; justify-content:center; min-height:100vh; background:var(--ink); }
   .box { background:var(--paper); padding:40px; max-width:420px; width:100%; box-shadow:8px 8px 0 var(--riser-red); }

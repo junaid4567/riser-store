@@ -43,6 +43,18 @@ function slugify($text) {
 }
 
 // ---------------------------------------------------
+// Cache-busting for CSS/JS: appends the file's last-modified time as a
+// version query string, so browsers pick up new edits immediately instead
+// of serving a stale cached copy for the full month our .htaccess caching
+// rule allows. $path is relative to the site root, e.g. '/css/style.css'.
+// ---------------------------------------------------
+function assetUrl($path) {
+    $fullPath = rtrim(dirname(__DIR__), '/') . '/' . ltrim($path, '/');
+    $version = file_exists($fullPath) ? filemtime($fullPath) : time();
+    return BASE_URL . '/' . ltrim($path, '/') . '?v=' . $version;
+}
+
+// ---------------------------------------------------
 // Attaches a compact color-options list to each product row, for the
 // hover swatches + quick "Add to Cart" on product cards. One query for
 // the whole batch (grid/shop page), not one query per card.

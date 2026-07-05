@@ -52,6 +52,6 @@
 window.RISER_BASE = "<?= $B ?>";
 window.RISER_CSRF = "<?= e(csrfToken()) ?>";
 </script>
-<script src="<?= $B ?>/js/main.js" defer></script>
+<script src="<?= assetUrl('/js/main.js') ?>" defer></script>
 </body>
 </html>
