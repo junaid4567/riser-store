@@ -294,6 +294,38 @@ h3 { font-size: clamp(1.2rem, 2.4vw, 1.6rem); }
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: transform .15s var(--ease);
+}
+
+/* "Just added" feedback — a quick bounce on the badge and a soft
+   expanding ring on the whole cart link, so adding to cart from
+   anywhere on the page (a product card, the PDP, the sticky mobile bar)
+   is clearly reflected back in the nav, not just in a toast. */
+.cart-badge.just-added { animation: cartBadgeBump .5s var(--ease); }
+@keyframes cartBadgeBump {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.5); }
+  60%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+.cart-link.just-added::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 999px;
+  border: 2px solid var(--riser-red);
+  opacity: 0.6;
+  animation: cartRingPulse .6s var(--ease) forwards;
+  pointer-events: none;
+}
+@keyframes cartRingPulse {
+  from { opacity: 0.6; transform: scale(0.85); }
+  to   { opacity: 0; transform: scale(1.3); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cart-badge.just-added { animation: none; }
+  .cart-link.just-added::after { animation: none; display: none; }
 }
 
 .nav-toggle {

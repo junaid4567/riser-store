@@ -142,11 +142,26 @@
   };
 
   /* ---------- Update cart badge ---------- */
-  function setCartBadge(count) {
+  function setCartBadge(count, animate) {
     const badge = document.getElementById('cartBadge');
     if (!badge) return;
     badge.textContent = count;
     badge.style.display = count > 0 ? 'inline-flex' : 'none';
+
+    if (animate && count > 0) {
+      const cartLink = badge.closest('.cart-link');
+      // restart the animation even if it's already mid-way through from a
+      // rapid second add-to-cart click
+      badge.classList.remove('just-added');
+      if (cartLink) cartLink.classList.remove('just-added');
+      void badge.offsetWidth; // force reflow so the animation restarts
+      badge.classList.add('just-added');
+      if (cartLink) cartLink.classList.add('just-added');
+      badge.addEventListener('animationend', () => badge.classList.remove('just-added'), { once: true });
+      if (cartLink) {
+        cartLink.addEventListener('animationend', () => cartLink.classList.remove('just-added'), { once: true });
+      }
+    }
   }
 
   /* ---------- Product card: hover color swatches + quick add ---------- */
@@ -212,7 +227,7 @@
         .then(res => res.json())
         .then(data => {
           if (data.success) {
-            setCartBadge(data.cartCount);
+            setCartBadge(data.cartCount, true);
             showToast(data.message || 'Added to cart');
           } else {
             showToast(data.message || 'Could not add to cart');
@@ -374,7 +389,7 @@
         .then(res => res.json())
         .then(data => {
           if (data.success) {
-            setCartBadge(data.cartCount);
+            setCartBadge(data.cartCount, true);
             showToast(data.message || 'Added to cart');
           } else {
             showToast(data.message || 'Could not add to cart');
