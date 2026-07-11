@@ -48,9 +48,10 @@ include __DIR__ . '/includes/header.php';
     </div>
 
     <div class="hero__visual">
-      <div class="hero__frame">
+      <div class="hero__frame hero__frame--blend">
         <video class="hero__frame-video" autoplay muted loop playsinline
                poster="<?= $B ?>/images/products/classic-black.jpg">
+          <source src="<?= $B ?>/videos/hero-card-alpha.webm" type="video/webm">
           <source src="<?= $B ?>/videos/hero-card.mp4" type="video/mp4">
         </video>
       </div>

@@ -789,6 +789,17 @@ body.cart-drawer-open { overflow: hidden; }
 .hero__frame img,
 .hero__frame-video { width: 100%; height: 100%; object-fit: cover; }
 
+/* Blended variant — for videos with a keyed-out transparent background
+   (webm/VP9 alpha). No box, no shadow, no aspect-crop: the content just
+   sits directly on the page background so it reads as part of the page
+   rather than a boxed "product photo" card. */
+.hero__frame--blend {
+  background: transparent;
+  box-shadow: none;
+  aspect-ratio: 16/9;
+}
+.hero__frame--blend .hero__frame-video { object-fit: contain; }
+
 .hero__caption {
   display: flex;
   align-items: center;
