@@ -37,6 +37,7 @@ RewriteRule ^sitemap\.xml$ sitemap.php [L]
     ExpiresByType text/css "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
     ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType video/mp4 "access plus 1 year"
 </IfModule>
 
 # Disable directory listing
