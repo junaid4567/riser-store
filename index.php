@@ -49,10 +49,10 @@ include __DIR__ . '/includes/header.php';
 
     <div class="hero__visual">
       <div class="hero__frame">
-        <img src="<?= $B ?>/images/products/classic-black.jpg"
-             alt="RISER Classic Snapback in black, embroidered logo"
-             fetchpriority="high" decoding="async"
-             onerror="this.src='<?= $B ?>/images/placeholder.svg'">
+        <video class="hero__frame-video" autoplay muted loop playsinline
+               poster="<?= $B ?>/images/products/classic-black.jpg">
+          <source src="<?= $B ?>/videos/hero-intro.mp4" type="video/mp4">
+        </video>
       </div>
       <div class="hero__caption">
         <span class="name">Classic Snapback — Black</span>
