@@ -460,6 +460,142 @@ h3 { font-size: clamp(1.2rem, 2.4vw, 1.6rem); }
 body.menu-open { overflow: hidden; }
 
 /* ===========================================================
+   Slide-out cart drawer — works at every screen size (unlike the
+   mobile-only nav menu above). Reuses the same slide-in-from-right
+   mechanic and close-button styling for visual consistency.
+   =========================================================== */
+.cart-drawer-overlay {
+  display: block;
+  position: fixed;
+  inset: 0;
+  background: rgba(20,18,16,0.35);
+  z-index: 299;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s var(--ease);
+}
+.cart-drawer-overlay.open { opacity: 1; pointer-events: auto; }
+
+.cart-drawer {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(420px, 90vw);
+  background: var(--paper);
+  z-index: 300;
+  transform: translateX(100%);
+  transition: transform .35s var(--ease);
+  box-shadow: -8px 0 28px rgba(0,0,0,0.12);
+}
+.cart-drawer.open { transform: translateX(0); }
+body.cart-drawer-open { overflow: hidden; }
+
+.cart-drawer__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--line-dark);
+  flex-shrink: 0;
+}
+.cart-drawer__head h3 { font-size: 1.15rem; }
+.cart-drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 28px 28px;
+  display: flex;
+  flex-direction: column;
+}
+.cart-drawer__loading {
+  margin: auto;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--mute);
+}
+
+.cart-drawer__empty {
+  margin: auto;
+  text-align: center;
+  color: var(--mute);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.cart-drawer__empty svg { color: var(--line-dark); }
+
+.cart-drawer__list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.cart-drawer__item {
+  display: flex;
+  gap: 14px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line-dark);
+}
+.cart-drawer__item:last-child { border-bottom: none; padding-bottom: 0; }
+.cart-drawer__item img {
+  width: 68px;
+  height: 68px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background: var(--paper-dim);
+  flex-shrink: 0;
+}
+.cart-drawer__item-info { flex: 1; min-width: 0; }
+.cart-drawer__item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.cart-drawer__item-info .name { font-weight: 700; font-size: 0.92rem; margin-bottom: 2px; }
+.cart-drawer__item-info .meta { font-family: var(--font-mono); font-size: 0.76rem; color: var(--mute); }
+.cart-drawer__item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.cart-drawer__item-row strong { font-size: 0.92rem; }
+
+.qty-stepper.qty-stepper--sm { height: 34px; }
+.qty-stepper.qty-stepper--sm button { width: 30px; }
+.qty-stepper.qty-stepper--sm input { width: 34px; font-size: 0.85rem; }
+
+.cart-drawer__summary {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line-dark);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cart-drawer__summary .btn { margin-top: 14px; }
+.cart-drawer__view-all {
+  text-align: center;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--mute);
+  transition: color .2s var(--ease);
+}
+.cart-drawer__view-all:hover { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-drawer, .cart-drawer-overlay { transition: none; }
+}
+
+
+/* ===========================================================
    Buttons
    =========================================================== */
 

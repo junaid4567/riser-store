@@ -97,7 +97,7 @@ $orgSchema = [
     </div>
 
     <div class="nav__actions">
-      <a href="<?= $B ?>/cart.php" class="cart-link">
+      <a href="<?= $B ?>/cart.php" class="cart-link" id="cartTrigger">
         <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><path d="M4 6h12l-1 10.5a1 1 0 0 1-1 .9H6a1 1 0 0 1-1-.9L4 6Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7 6a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="1.6"/></svg>
         <?php if ($cartCount > 0): ?>
           <span class="cart-badge" id="cartBadge"><?= (int)$cartCount ?></span>
@@ -121,6 +121,20 @@ $orgSchema = [
       <li style="--i:5"><a href="<?= $B ?>/contact.php"      class="<?= $activeNav==='contact'  ? 'active':'' ?>">Contact</a></li>
       <li style="--i:6"><a href="<?= $B ?>/cart.php">Cart<?= $cartCount > 0 ? ' (' . (int)$cartCount . ')' : '' ?></a></li>
     </ul>
+  </div>
+
+  <!-- Slide-out cart drawer: opens on cart-icon click and on every
+       successful add-to-cart, so the shopper sees the item land without
+       leaving the page. Content is fetched from cart-drawer.php. -->
+  <div class="cart-drawer-overlay" id="cartDrawerOverlay"></div>
+  <div class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-drawer__head">
+      <h3>Your Cart</h3>
+      <button class="mobile-menu__close" id="cartDrawerClose" aria-label="Close cart">&times;</button>
+    </div>
+    <div class="cart-drawer__body" id="cartDrawerBody">
+      <div class="cart-drawer__loading">Loading…</div>
+    </div>
   </div>
 </header>
 

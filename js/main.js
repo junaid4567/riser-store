@@ -141,6 +141,104 @@
     toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
   };
 
+  /* ---------- Slide-out cart drawer ---------- */
+  const cartTrigger = document.getElementById('cartTrigger');
+  const cartDrawer = document.getElementById('cartDrawer');
+  const cartDrawerOverlay = document.getElementById('cartDrawerOverlay');
+  const cartDrawerClose = document.getElementById('cartDrawerClose');
+  const cartDrawerBody = document.getElementById('cartDrawerBody');
+
+  function loadCartDrawer() {
+    if (!cartDrawerBody) return;
+    cartDrawerBody.innerHTML = '<div class="cart-drawer__loading">Loading…</div>';
+    fetch((window.RISER_BASE||'') + '/cart-drawer.php', { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+      .then(res => res.text())
+      .then(html => { cartDrawerBody.innerHTML = html; })
+      .catch(() => { cartDrawerBody.innerHTML = '<div class="cart-drawer__loading">Could not load your cart. Please refresh the page.</div>'; });
+  }
+
+  function openCartDrawer(skipReload) {
+    if (!cartDrawer || !cartDrawerOverlay) return;
+    cartDrawer.classList.add('open');
+    cartDrawerOverlay.classList.add('open');
+    cartDrawer.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('cart-drawer-open');
+    if (!skipReload) loadCartDrawer();
+  }
+
+  function closeCartDrawer() {
+    if (!cartDrawer || !cartDrawerOverlay) return;
+    cartDrawer.classList.remove('open');
+    cartDrawerOverlay.classList.remove('open');
+    cartDrawer.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('cart-drawer-open');
+  }
+
+  if (cartTrigger && cartDrawer) {
+    cartTrigger.addEventListener('click', (e) => {
+      // Let ctrl/cmd/middle-click still open cart.php normally in a new tab
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+      e.preventDefault();
+      openCartDrawer();
+    });
+    if (cartDrawerClose) cartDrawerClose.addEventListener('click', closeCartDrawer);
+    cartDrawerOverlay.addEventListener('click', closeCartDrawer);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeCartDrawer();
+    });
+  }
+
+  // Delegated handlers for the drawer's qty +/- and remove buttons — the
+  // drawer's HTML is injected dynamically via fetch, so listeners are
+  // attached once here on the stable parent rather than per-item.
+  if (cartDrawerBody) {
+    function drawerCartRequest(action, cartKey, qty) {
+      const formData = new FormData();
+      formData.append('action', action);
+      formData.append('cart_key', cartKey);
+      if (qty !== undefined) formData.append('qty', qty);
+      if (window.RISER_CSRF) formData.append('csrf_token', window.RISER_CSRF);
+
+      return fetch((window.RISER_BASE||'') + '/cart-actions.php', {
+        method: 'POST',
+        body: formData,
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      }).then(res => res.json());
+    }
+
+    cartDrawerBody.addEventListener('click', function (e) {
+      const incBtn = e.target.closest('.js-drawer-qty-inc');
+      const decBtn = e.target.closest('.js-drawer-qty-dec');
+      const removeBtn = e.target.closest('.js-drawer-remove');
+      const btn = incBtn || decBtn || removeBtn;
+      if (!btn) return;
+
+      const cartKey = btn.dataset.cartKey;
+      let qty = 0;
+
+      if (removeBtn) {
+        qty = 0;
+      } else {
+        const input = btn.closest('.cart-drawer__item-row, .cart-drawer__item')
+          .querySelector('.js-drawer-qty');
+        const current = parseInt(input.value, 10) || 1;
+        const max = parseInt(input.dataset.max || '99', 10);
+        qty = incBtn ? Math.min(current + 1, max) : Math.max(0, current - 1);
+      }
+
+      drawerCartRequest('update', cartKey, qty)
+        .then(data => {
+          if (data.success) {
+            setCartBadge(data.cartCount, false);
+            loadCartDrawer();
+          } else {
+            showToast(data.message || 'Could not update cart');
+          }
+        })
+        .catch(() => showToast('Network error — please try again'));
+    });
+  }
+
   /* ---------- Update cart badge ---------- */
   function setCartBadge(count, animate) {
     const badge = document.getElementById('cartBadge');
@@ -229,6 +327,7 @@
           if (data.success) {
             setCartBadge(data.cartCount, true);
             showToast(data.message || 'Added to cart');
+            openCartDrawer();
           } else {
             showToast(data.message || 'Could not add to cart');
           }
@@ -391,6 +490,7 @@
           if (data.success) {
             setCartBadge(data.cartCount, true);
             showToast(data.message || 'Added to cart');
+            openCartDrawer();
           } else {
             showToast(data.message || 'Could not add to cart');
           }
