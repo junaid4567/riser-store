@@ -797,6 +797,8 @@ body.cart-drawer-open { overflow: hidden; }
   background: transparent;
   box-shadow: none;
   aspect-ratio: 16/9;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
 }
 .hero__frame--blend .hero__frame-video { object-fit: contain; }
 
