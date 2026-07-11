@@ -51,7 +51,7 @@ include __DIR__ . '/includes/header.php';
       <div class="hero__frame">
         <video class="hero__frame-video" autoplay muted loop playsinline
                poster="<?= $B ?>/images/products/classic-black.jpg">
-          <source src="<?= $B ?>/videos/hero-intro.mp4" type="video/mp4">
+          <source src="<?= $B ?>/videos/hero-card.mp4" type="video/mp4">
         </video>
       </div>
       <div class="hero__caption">
