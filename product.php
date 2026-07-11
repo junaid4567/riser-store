@@ -154,11 +154,8 @@ $productSchema = [
       </div>
 
       <div class="pdp__actions">
-        <button type="submit" class="btn btn--pill btn--full" id="pdpAddBtn" disabled>
+        <button type="submit" class="btn btn--accent btn--full" id="pdpAddBtn" disabled>
           <span class="btn-label">Add to Cart</span>
-          <span class="btn--pill__badge" aria-hidden="true">
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="none"><path d="M6 14 14 6M14 6H7M14 6v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
         </button>
       </div>
     </form>

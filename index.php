@@ -28,38 +28,20 @@ include __DIR__ . '/includes/header.php';
 ?>
 
 <section class="hero">
-  <div class="hero__inner">
-    <div class="hero__copy">
-      <p class="hero__intro">
-        <strong>Every RISER cap is structured, embroidered, and built to hold its shape.</strong>
-        <span class="dim"> Made in our Karachi workshop with premium materials and honest pricing, from your first drop to your fiftieth wear.</span>
-      </p>
+  <video class="hero__video" autoplay muted loop playsinline
+         poster="<?= $B ?>/images/products/classic-black.jpg">
+    <source src="<?= $B ?>/videos/hero-intro.mp4" type="video/mp4">
+  </video>
+  <div class="hero__scrim"></div>
 
-      <h1 class="hero__headline"><span>WEAR</span><span>THE</span><span>RISE.</span></h1>
-
-      <div class="hero__cta">
-        <a href="<?= $B ?>/shop.php" class="btn btn--pill">
-          Shop All Caps
-          <span class="btn--pill__badge" aria-hidden="true">
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="none"><path d="M6 14 14 6M14 6H7M14 6v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-        </a>
-      </div>
-    </div>
-
-    <div class="hero__visual">
-      <div class="hero__frame">
-        <img src="<?= $B ?>/images/products/classic-black.jpg"
-             alt="RISER Classic Snapback in black, embroidered logo"
-             fetchpriority="high" decoding="async"
-             onerror="this.src='<?= $B ?>/images/placeholder.svg'">
-      </div>
-      <div class="hero__caption">
-        <span class="name">Classic Snapback — Black</span>
-        <a href="<?= $B ?>/shop.php">Shop Now</a>
-      </div>
-    </div>
+  <div class="hero__band">
+    <span class="eyebrow">RISER Caps — Karachi, Pakistan</span>
+    <h1 class="hero__headline">WEAR<br>THE<br>RISE.</h1>
+    <p class="hero__subtext">Structured, embroidered caps built in our Karachi workshop. Cash on Delivery, nationwide.</p>
+    <a href="<?= $B ?>/shop.php" class="btn btn--outline">Shop All Caps</a>
   </div>
+
+  <div class="m-stripe"></div>
 
   <?php
     // Pull a small spread of real catalog images for the numbered filmstrip,
@@ -150,13 +132,8 @@ include __DIR__ . '/includes/header.php';
       <h2 style="margin-top:14px;">Built Different.<br>Worn Everywhere.</h2>
       <p style="color:var(--mute-on-dark); max-width:48ch; margin:18px 0 28px;">Every RISER cap is structured, embroidered, and quality-checked before it leaves our Karachi workshop. No middlemen, no inflated prices — just street-ready caps shipped straight to your door with Cash on Delivery.</p>
       <div style="display:flex; gap:14px; flex-wrap:wrap; align-items:center;">
-        <a href="<?= $B ?>/about.php" class="btn btn--pill btn--light btn--dark-badge">
-          Our Story
-          <span class="btn--pill__badge" aria-hidden="true">
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="none"><path d="M6 14 14 6M14 6H7M14 6v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-        </a>
-        <a href="<?= $B ?>/shop.php" class="btn btn--ghost">Shop Caps</a>
+        <a href="<?= $B ?>/about.php" class="btn btn--light">Our Story</a>
+        <a href="<?= $B ?>/shop.php" class="btn btn--outline">Shop Caps</a>
       </div>
     </div>
     <img src="<?= $B ?>/images/about-stack.jpg"
