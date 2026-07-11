@@ -5,61 +5,33 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
-/* ===========================================================
-   RISER × M — Motorsport-engineering design system
-   Adapted from BMW M brand spec: near-black canvas, uppercase
-   heavy display type over light body copy, M tricolor stripe
-   as the only decorative accent, flat 0-radius rectangles.
-   =========================================================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
-
 :root {
-  /* Color tokens — BMW M motorsport palette */
-  --canvas:        #000000;   /* page floor everywhere — true black */
-  --surface-soft:  #0D0D0D;   /* spec cells, footer-adjacent strips */
-  --surface-card:  #1A1A1A;   /* cards, secondary buttons, icon buttons */
-  --surface-elevated: #262626; /* nested cards, hairline-strong */
-  --carbon-gray:   #2B2B2B;
-  --ink-soft:      #1A1A1A;
-
-  --ink:        #FFFFFF;      /* existing rules use --ink as TEXT color — now white-on-black */
-  --paper:      #000000;      /* existing rules use --paper as BACKGROUND — now true black canvas */
-  --paper-dim:  #0D0D0D;
-  --on-dark:    #FFFFFF;
+  /* Color tokens — monochrome luxury palette (was: red/black streetwear) */
+  --ink:        #0A0A0A;
+  --ink-soft:   #1A1A1A;
+  --paper:      #FFFFFF;
+  --paper-dim:  #F4F3F0;
+  --canvas:     #E9E7E2;   /* page backdrop behind the framed card */
+  --riser-red:  #8B6A4F;   /* warm leather-brown accent, used sparingly */
+  --riser-red-deep: #6E5340;
   --white:      #FFFFFF;
+  --mute:       #8A8A87;
+  --mute-on-dark: #ABABA6;
+  --line:       rgba(255,255,255,0.12);
+  --line-dark:  rgba(10,10,10,0.10);
+  --success:    #2E7D4F;
 
-  --body:        #BBBBBB;
-  --body-strong: #E6E6E6;
-  --mute:        #7E7E7E;
-  --mute-on-dark: #7E7E7E;
-
-  --hairline:        #3C3C3C;
-  --hairline-strong: #262626;
-  --line:      #3C3C3C;
-  --line-dark: #3C3C3C;
-
-  /* M tricolor — brand-identity accent only, never a button fill */
-  --m-blue-light: #0066B1;
-  --m-blue-dark:  #1C69D4;
-  --m-red:        #E22718;
-  --riser-red:      #E22718;  /* legacy alias so existing components stay red-accented, using M-red */
-  --riser-red-deep: #B31F14;
-
-  --warning: #F4B400;
-  --success: #0FA336;
-
-  /* Type — Inter substitutes for BMW Type Next Latin per spec (700/300 pair) */
-  --font-display: 'Inter', -apple-system, sans-serif;
+  /* Type */
+  --font-display: 'Archivo Black', 'Inter', sans-serif;
   --font-body: 'Inter', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Layout */
-  --max-w: 1440px;
+  --max-w: 1320px;
   --gutter: clamp(20px, 5vw, 64px);
-  --radius: 0px;         /* sharp rectangles are the dominant brand shape */
-  --radius-lg: 0px;
-  --radius-pill: 9999px; /* reserved for circular icon buttons only */
+  --radius: 14px;        /* was 2px — soft rounded "app" look throughout */
+  --radius-lg: 28px;     /* big frame / hero image corners */
+  --radius-pill: 999px;
 
   --ease: cubic-bezier(.16,.84,.44,1);
 }
@@ -166,12 +138,12 @@ h3 { font-size: clamp(1.2rem, 2.4vw, 1.6rem); }
    =========================================================== */
 
 .ticker {
-  background: var(--surface-card);
-  color: var(--on-dark);
+  background: var(--ink);
+  color: var(--paper);
   overflow: hidden;
   white-space: nowrap;
-  border-top: 1px solid var(--hairline);
-  border-bottom: 1px solid var(--hairline);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 .ticker__track {
   display: inline-flex;
@@ -206,15 +178,15 @@ h3 { font-size: clamp(1.2rem, 2.4vw, 1.6rem); }
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--canvas);
-  border-bottom: 1px solid var(--hairline);
+  background: var(--paper);
+  border-bottom: 1px solid var(--line-dark);
   transition: background .3s var(--ease), box-shadow .3s var(--ease), backdrop-filter .3s var(--ease);
 }
 .site-header.is-scrolled {
-  background: rgba(0,0,0,0.82);
+  background: rgba(245,242,234,0.82);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 2px 16px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06), 0 8px 28px -10px rgba(139,106,79,0.28);
 }
 
 .nav {
@@ -252,9 +224,9 @@ h3 { font-size: clamp(1.2rem, 2.4vw, 1.6rem); }
 .nav__pill {
   position: relative;
   display: inline-flex;
-  background: var(--surface-card);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius);
+  background: var(--paper-dim);
+  border: 1px solid var(--line-dark);
+  border-radius: 999px;
   padding: 6px;
 }
 .nav__indicator {
@@ -263,8 +235,8 @@ h3 { font-size: clamp(1.2rem, 2.4vw, 1.6rem); }
   left: 6px;
   height: calc(100% - 12px);
   width: 0;
-  background: var(--on-dark);
-  border-radius: var(--radius);
+  background: var(--ink);
+  border-radius: 999px;
   box-shadow: 0 4px 16px -4px rgba(139,106,79,0.5);
   transition: transform .45s cubic-bezier(.34, 1.56, .64, 1), width .45s cubic-bezier(.34, 1.56, .64, 1), opacity .2s var(--ease);
   z-index: 1;
@@ -283,14 +255,13 @@ h3 { font-size: clamp(1.2rem, 2.4vw, 1.6rem); }
 .nav__links a {
   position: relative;
   display: block;
-  font-family: var(--font-display);
-  font-weight: 700;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
-  letter-spacing: 1.5px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   padding: 9px 18px;
-  border-radius: var(--radius);
-  color: var(--on-dark);
+  border-radius: 999px;
+  color: var(--ink);
   transition: color .3s var(--ease);
 }
 .nav__links a.is-lit { color: var(--paper); }
@@ -480,121 +451,122 @@ body.menu-open { overflow: hidden; }
    Buttons
    =========================================================== */
 
-/* ===========================================================
-   Buttons — BMW M spec: flat, 0-radius rectangles, uppercase
-   14px/700 labels at 1.5px tracking, 48px min height. The
-   rectangular silhouette + letterspacing IS the brand button;
-   there is no rounded or pill variant in this system.
-   =========================================================== */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-family: var(--font-display);
-  font-size: 0.875rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 16px 32px;
-  min-height: 48px;
-  border: 1px solid var(--on-dark);
-  background: transparent;
-  color: var(--on-dark);
+  padding: 15px 28px;
+  border: 2px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
   border-radius: var(--radius);
-  transition: background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
+  transition: transform .2s var(--ease), background .2s var(--ease), color .2s var(--ease), box-shadow .2s var(--ease);
   white-space: nowrap;
 }
 .btn:hover {
-  background: var(--on-dark);
-  color: var(--canvas);
+  background: var(--riser-red);
+  border-color: var(--riser-red);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--ink);
 }
-.btn:active { opacity: 0.85; }
+.btn:active { transform: translateY(0); box-shadow: none; }
 
-/* Outline is the default look already (transparent + white border) — this
-   modifier exists for pages that need to say so explicitly. */
 .btn--outline {
   background: transparent;
-  color: var(--on-dark);
-  border-color: var(--on-dark);
+  color: var(--ink);
 }
-.btn--outline:hover { background: var(--on-dark); color: var(--canvas); }
+.btn--outline:hover { color: var(--white); }
 
-/* Solid — filled white button with black label, for the rare cases the
-   spec calls "button-on-light" (used sparingly, e.g. inside light-surface
-   dialogs/configurator-style panels). */
 .btn--light {
-  background: var(--on-dark);
-  border-color: var(--on-dark);
-  color: var(--canvas);
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--ink);
 }
 .btn--light:hover {
-  background: transparent;
-  color: var(--on-dark);
+  background: var(--riser-red);
+  border-color: var(--riser-red);
+  color: var(--white);
 }
 
-/* M-red variant — the only place M-red appears as a fill, reserved for
-   the single highest-priority action per page (e.g. Add to Cart), since
-   the spec says the tricolor itself must never be a button fill — this
-   uses m-red alone, not the stripe, as a deliberate one-off exception
-   for e-commerce conversion actions the source brand doesn't have. */
-.btn--accent {
-  background: var(--m-red);
-  border-color: var(--m-red);
-  color: var(--on-dark);
+/* Pill + circular arrow badge — the signature CTA style: label on the left,
+   a white circular badge with an arrow on the right that rotates on hover. */
+.btn--pill {
+  position: relative;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: 0;
+  text-transform: none;
+  border-radius: 999px;
+  padding: 6px 6px 6px 26px;
+  gap: 16px;
+  transition: transform .3s var(--ease), box-shadow .4s var(--ease), background .3s var(--ease), border-color .3s var(--ease);
 }
-.btn--accent:hover {
+.btn--pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -6px rgba(139,106,79,0.55), 0 0 0 1px rgba(139,106,79,0.08);
+}
+.btn--pill.btn--full { justify-content: space-between; }
+.btn--pill__badge {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .35s var(--ease), background .3s var(--ease);
+}
+.btn--pill:hover .btn--pill__badge { transform: rotate(45deg); }
+.btn--pill.btn--dark-badge .btn--pill__badge { background: var(--ink); color: var(--paper); }
+
+/* Ghost — fully transparent, for use over dark backgrounds or images
+   (hero, dark sections, PDP media). Fixes the old bug where .btn--outline
+   (dark text + dark border) went nearly invisible on the dark hero. */
+.btn--ghost {
   background: transparent;
-  color: var(--m-red);
+  border-color: var(--paper);
+  color: var(--paper);
+}
+.btn--ghost:hover {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--ink);
+  box-shadow: 4px 4px 0 var(--riser-red);
+}
+
+/* Glass — frosted, semi-transparent fill with backdrop blur, plus a soft
+   ambient glow halo that blooms outward on hover. For CTAs that sit
+   directly on top of a photo/image where full transparency would blend
+   into busy backgrounds and lose legibility. */
+.btn--glass {
+  position: relative;
+  background: rgba(245,242,234,0.14);
+  border-color: rgba(245,242,234,0.55);
+  color: var(--paper);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background .3s var(--ease), border-color .3s var(--ease), color .3s var(--ease), box-shadow .4s var(--ease), transform .3s var(--ease);
+}
+.btn--glass:hover {
+  background: rgba(245,242,234,0.94);
+  border-color: var(--paper);
+  color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(245,242,234,0.4), 0 12px 34px -4px rgba(245,242,234,0.45), 0 0 46px 4px rgba(245,242,234,0.22);
 }
 
 .btn--full { width: 100%; }
-.btn[disabled] { opacity: 0.4; cursor: not-allowed; }
-.btn[disabled]:hover { background: transparent; color: var(--on-dark); }
-
-/* Circular icon button — the ONE non-rectangular shape in the system */
-.btn-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 9999px;
-  background: var(--surface-card);
-  color: var(--on-dark);
-  border: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: background .2s var(--ease);
-}
-.btn-icon:hover { background: var(--surface-elevated); }
-
-/* Inline uppercase text link with a trailing arrow — "VIEW ALL", "READ MORE" */
-.text-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-display);
-  font-size: 0.875rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--on-dark);
-  transition: gap .2s var(--ease);
-}
-.text-link:hover { gap: 12px; }
-.text-link::after { content: '→'; }
-
-/* M tricolor stripe — the system's one true decorative element. Used as a
-   divider between brand-identity sections, never as a button or fill. */
-.m-stripe {
-  height: 4px;
-  width: 100%;
-  background: linear-gradient(to right,
-    var(--m-blue-light) 0%, var(--m-blue-light) 33%,
-    var(--m-blue-dark) 33%, var(--m-blue-dark) 66%,
-    var(--m-red) 66%, var(--m-red) 100%);
-}
-
-
+.btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+.btn[disabled]:hover { transform: none; box-shadow: none; background: var(--ink); border-color: var(--ink); color: var(--paper); }
 
 /* ===========================================================
    Hero
@@ -602,74 +574,104 @@ body.menu-open { overflow: hidden; }
 
 .hero {
   position: relative;
-  background: var(--canvas);
-  color: var(--on-dark);
-  overflow: hidden;
-  min-height: 88vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 56px var(--gutter) 0;
 }
-.hero__video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
-.hero__scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.55) 100%);
-  z-index: 1;
-}
-.hero__band {
-  position: relative;
-  z-index: 2;
+.hero__inner {
   max-width: var(--max-w);
   margin: 0 auto;
-  width: 100%;
-  padding: var(--spacing-xxl, 64px) var(--gutter);
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 56px;
+  align-items: center;
 }
-.hero__band .eyebrow {
+.hero__copy { position: relative; }
+.hero__intro {
+  max-width: 400px;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin-bottom: 40px;
   opacity: 0;
   animation: rise-in .7s var(--ease) 0s forwards;
 }
+.hero__intro strong { font-weight: 700; color: var(--ink); }
+.hero__intro .dim { color: var(--mute); }
+
 .hero__headline {
   font-family: var(--font-display);
   text-transform: uppercase;
-  font-weight: 700;
-  font-size: clamp(2.8rem, 8vw, 5rem);
-  line-height: 1;
-  letter-spacing: -0.5px;
-  margin: 16px 0 24px;
+  font-size: clamp(2.6rem, 5.6vw, 4.6rem);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  margin-bottom: 36px;
   opacity: 0;
   animation: rise-in .8s var(--ease) .12s forwards;
 }
-.hero__subtext {
+.hero__headline span { display: block; }
+
+.hero__cta {
+  display: inline-flex;
+  opacity: 0;
+  animation: rise-in .8s var(--ease) .28s forwards;
+}
+
+.hero__visual { position: relative; }
+.hero__visual::before {
+  content: '';
+  position: absolute;
+  inset: -8%;
+  background: radial-gradient(ellipse at 60% 35%, rgba(139,106,79,0.28) 0%, rgba(139,106,79,0) 70%);
+  filter: blur(10px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  animation: rise-in 1.1s var(--ease) .15s forwards;
+}
+.hero__frame {
+  position: relative;
+  z-index: 1;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4/3.1;
+  opacity: 0;
+  box-shadow: 0 30px 60px -20px rgba(10,10,10,0.35), 0 0 60px -10px rgba(139,106,79,0.25);
+  animation: rise-in .9s var(--ease) .2s forwards;
+}
+.hero__frame img { width: 100%; height: 100%; object-fit: cover; }
+
+.hero__caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  opacity: 0;
+  animation: rise-in .8s var(--ease) .4s forwards;
+}
+.hero__caption .name {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
+}
+.hero__caption a {
   font-family: var(--font-body);
-  font-weight: 300;
-  font-size: 1.125rem;
-  color: var(--body-strong);
-  max-width: 46ch;
-  margin-bottom: 32px;
-  opacity: 0;
-  animation: rise-in .8s var(--ease) .24s forwards;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color .2s var(--ease);
 }
-.hero__band .btn {
-  opacity: 0;
-  animation: rise-in .8s var(--ease) .36s forwards;
-}
+.hero__caption a:hover { color: var(--riser-red); }
 
 @keyframes rise-in {
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 640px) {
-  .hero { min-height: 78vh; }
-  .hero__band { padding: 32px var(--gutter); }
+@media (max-width: 880px) {
+  .hero__inner { grid-template-columns: 1fr; gap: 32px; }
+  .hero__visual { order: -1; }
 }
 
 /* ===========================================================
@@ -729,7 +731,7 @@ body.menu-open { overflow: hidden; }
   padding: 80px var(--gutter);
 }
 .section--tight { padding: 56px var(--gutter); }
-.section--dark { background: var(--surface-card); color: var(--on-dark); }
+.section--dark { background: var(--ink); color: var(--paper); }
 .section--paper-dim { background: var(--paper-dim); }
 
 .section__head {
@@ -987,9 +989,8 @@ body.menu-open { overflow: hidden; }
    =========================================================== */
 
 .site-footer {
-  background: var(--canvas);
-  color: var(--body);
-  border-top: 1px solid var(--hairline);
+  background: var(--ink);
+  color: var(--paper);
   padding: 64px var(--gutter) 28px;
 }
 .footer__grid {
@@ -1038,9 +1039,8 @@ body.menu-open { overflow: hidden; }
    =========================================================== */
 
 .page-banner {
-  background: var(--canvas);
-  color: var(--on-dark);
-  border-bottom: 1px solid var(--hairline);
+  background: var(--ink);
+  color: var(--paper);
   padding: 56px var(--gutter) 40px;
   text-align: left;
 }
@@ -1264,6 +1264,7 @@ body.menu-open { overflow: hidden; }
    phone screen. Applied to every multi-column grid on the site that
    collapses to one column on mobile, so this class of bug can't recur.
    =========================================================== */
+.hero__inner > *,
 .shop-layout > *,
 .pdp > *,
 .cart-layout > *,
@@ -1588,9 +1589,8 @@ body.menu-open { overflow: hidden; }
   position: fixed;
   bottom: 28px;
   right: 28px;
-  background: var(--surface-card);
-  color: var(--on-dark);
-  border: 1px solid var(--hairline);
+  background: var(--ink);
+  color: var(--paper);
   padding: 16px 22px;
   font-family: var(--font-mono);
   font-size: 0.85rem;
@@ -1677,7 +1677,7 @@ body.menu-open { overflow: hidden; }
   left: -9999px;
   top: 0;
   background: var(--riser-red);
-  color: var(--on-dark);
+  color: var(--paper);
   padding: 10px 16px;
   z-index: 1000;
   font-family: var(--font-mono);

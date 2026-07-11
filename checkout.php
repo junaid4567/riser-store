@@ -263,8 +263,11 @@ include __DIR__ . '/includes/header.php';
           </div>
         </div>
 
-        <button type="submit" class="btn btn--accent btn--full">
+        <button type="submit" class="btn btn--pill btn--full">
           <span class="btn-label">Complete Order — <?= formatPrice($total) ?></span>
+          <span class="btn--pill__badge" aria-hidden="true">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="none"><path d="M6 14 14 6M14 6H7M14 6v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
         </button>
       </form>
     </div>

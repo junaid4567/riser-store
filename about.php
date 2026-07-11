@@ -54,8 +54,13 @@ include __DIR__ . '/includes/header.php';
     <span class="eyebrow">Ready to Rise?</span>
     <h2 style="margin:16px 0 24px;">Find Your Cap Today</h2>
     <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
-      <a href="<?= BASE_URL ?>/shop.php" class="btn btn--accent">Shop the Collection</a>
-      <a href="<?= BASE_URL ?>/contact.php" class="btn btn--outline">Get in Touch</a>
+      <a href="<?= BASE_URL ?>/shop.php" class="btn btn--pill btn--light btn--dark-badge">
+        Shop the Collection
+        <span class="btn--pill__badge" aria-hidden="true">
+          <svg viewBox="0 0 20 20" width="16" height="16" fill="none"><path d="M6 14 14 6M14 6H7M14 6v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+      <a href="<?= BASE_URL ?>/contact.php" class="btn btn--ghost">Get in Touch</a>
     </div>
   </div>
 </section>
